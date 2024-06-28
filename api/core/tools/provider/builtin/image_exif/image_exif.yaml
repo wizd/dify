@@ -1,0 +1,16 @@
+identity:
+  author: Wuzhou Yang
+  name: image_exif
+  label:
+    en_US: Extract Image Exif
+    zh_Hans: 提取图像EXIF信息
+    pt_BR: Extract Image Exif
+  description:
+    en_US: Extract EXIF information from your image.
+    zh_Hans: 从图像中提取EXIF信息。
+    pt_BR: Extract EXIF information from your image.
+  icon: icon.png
+  tags:
+    - productivity
+    - image
+
