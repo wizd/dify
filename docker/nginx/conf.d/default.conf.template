@@ -32,3 +32,21 @@ server {
     # placeholder for https config defined in https.conf.template
     ${HTTPS_CONFIG}
 }
+
+server {
+    listen ${NGINX_PORT};
+    listen ${NGINX_SSL_PORT} ssl;
+    server_name ramail.local;
+
+    ssl_certificate ./../ssl/${NGINX_SSL_CERT_FILENAME};
+    ssl_certificate_key ./../ssl/${NGINX_SSL_CERT_KEY_FILENAME};
+    ssl_protocols ${NGINX_SSL_PROTOCOLS};
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    location / {
+      proxy_pass http://172.17.0.1:81;
+      include proxy.conf;
+    }
+}
