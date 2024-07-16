@@ -174,9 +174,10 @@ x-shared-env: &shared-api-worker-env
   SSRF_PROXY_HTTP_URL: ${SSRF_PROXY_HTTP_URL:-http://ssrf_proxy:3128}
   SSRF_PROXY_HTTPS_URL: ${SSRF_PROXY_HTTPS_URL:-http://ssrf_proxy:3128}
   HTTPX_VERIFY: ${HTTPX_VERIFY:-false}
-  EMBRR_HOST_NAME: ${EMBRR_HOST_NAME:-172.30.4.145}
+  EMBRR_HOST_NAME: ${EMBRR_HOST_NAME:-192.168.3.56}
   EMBRR_PORT: ${EMBRR_PORT:-5011}
   EXTRA_HOSTS: ${EXTRA_HOSTS:-api.jina.ai:nginx}
+  DOCKER_0_IP: ${DOCKER_0_IP:-172.17.0.1}
 
 services:
   # API service
@@ -199,7 +200,7 @@ services:
       - ssrf_proxy_network
       - default
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # worker service
   # The Celery worker for processing the queue.
@@ -213,7 +214,7 @@ services:
       MODE: worker
       HTTPX_VERIFY: ${HTTPX_VERIFY:-false}
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
+      - 'api.jina.ai:${DOCKER_0_IP}'
     depends_on:
       - db
       - redis
@@ -229,7 +230,7 @@ services:
     image: langgenius/dify-web:0.6.14
     restart: always
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
+      - 'api.jina.ai:${DOCKER_0_IP}'
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
       APP_API_URL: ${APP_API_URL:-}
@@ -253,7 +254,7 @@ services:
       timeout: 3s
       retries: 30
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # The redis cache.
   redis:
@@ -308,7 +309,7 @@ services:
       - ssrf_proxy_network
       - default
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
@@ -341,8 +342,9 @@ services:
       EMBRR_HOST_NAME: ${EMBRR_HOST_NAME:-172.30.4.145}
       EMBRR_PORT: ${EMBRR_PORT:-5011}
       HTTPX_VERIFY: ${HTTPX_VERIFY:-false}
+      DOCKER_0_IP: ${DOCKER_0_IP:-10.10.0.1}
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
+      - 'api.jina.ai:${DOCKER_0_IP}'
     depends_on:
       - api
       - web
@@ -374,8 +376,8 @@ services:
       AUTHORIZATION_ADMINLIST_ENABLED: ${WEAVIATE_AUTHORIZATION_ADMINLIST_ENABLED:-true}
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@dify.ai}
     extra_hosts:
-      - 'api.jina.ai:172.17.0.1'
-      
+      - 'api.jina.ai:${DOCKER_0_IP}'
+
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
   qdrant:
@@ -387,6 +389,8 @@ services:
       - ./volumes/qdrant:/qdrant/storage
     environment:
       QDRANT_API_KEY: ${QDRANT_API_KEY:-difyai123456}
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # The pgvector vector database.
   pgvector:
@@ -409,6 +413,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # pgvecto-rs vector store
   pgvecto-rs:
@@ -431,6 +437,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # Chroma vector database
   chroma:
@@ -444,6 +452,8 @@ services:
       CHROMA_SERVER_AUTHN_CREDENTIALS: ${CHROMA_SERVER_AUTHN_CREDENTIALS:-difyai123456}
       CHROMA_SERVER_AUTHN_PROVIDER: ${CHROMA_SERVER_AUTHN_PROVIDER:-chromadb.auth.token_authn.TokenAuthenticationServerProvider}
       IS_PERSISTENT: ${CHROMA_IS_PERSISTENT:-TRUE}
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # Oracle vector database
   oracle:
@@ -459,6 +469,8 @@ services:
     environment:
       - ORACLE_PWD=${ORACLE_PWD:-Dify123456}
       - ORACLE_CHARACTERSET=${ORACLE_CHARACTERSET:-AL32UTF8}
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # Milvus vector database services
   etcd:
@@ -481,6 +493,8 @@ services:
       retries: 3
     networks:
       - milvus
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   minio:
     container_name: milvus-minio
@@ -500,6 +514,8 @@ services:
       retries: 3
     networks:
       - milvus
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   milvus-standalone:
     container_name: milvus-standalone
@@ -524,6 +540,8 @@ services:
       - "minio"
     networks:
       - milvus
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # Opensearch vector database
   opensearch:
@@ -547,6 +565,8 @@ services:
       - ./volumes/opensearch/data:/usr/share/opensearch/data
     networks:
       - opensearch-net
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   opensearch-dashboards:
     container_name: opensearch-dashboards
@@ -561,6 +581,8 @@ services:
       - opensearch-net
     depends_on:
       - opensearch
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
   # MyScale vector database
   myscale:
@@ -576,6 +598,8 @@ services:
       - ./volumes/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
     ports:
       - "${MYSCALE_PORT:-8123}:${MYSCALE_PORT:-8123}"
+    extra_hosts:
+      - 'api.jina.ai:${DOCKER_0_IP}'
 
 networks:
   # create a network between sandbox, api and ssrf_proxy, and can not access outside.

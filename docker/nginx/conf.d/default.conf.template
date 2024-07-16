@@ -46,7 +46,7 @@ server {
     ssl_session_timeout 10m;
 
     location / {
-      proxy_pass http://172.17.0.1:81;
+      proxy_pass http://${DOCKER_0_IP}:3002;
       include proxy.conf;
     }
 }
