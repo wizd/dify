@@ -1,5 +1,4 @@
 # Please do not directly edit this file. Instead, modify the .env variables related to NGINX configuration.
-
 server {
     listen ${NGINX_PORT};
     server_name ${NGINX_SERVER_NAME};
@@ -44,6 +43,17 @@ server {
     ssl_prefer_server_ciphers on;
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
+
+    location /_next/webpack-hmr {
+      proxy_pass http://${DOCKER_0_IP}:3002/_next/webpack-hmr;
+      include proxy.conf;
+      
+      # WebSocket 支持
+      proxy_set_header Upgrade ${DOLLAR}http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host ${DOLLAR}host;
+      proxy_cache_bypass ${DOLLAR}http_upgrade;
+    }
 
     location / {
       proxy_pass http://${DOCKER_0_IP}:3002;
