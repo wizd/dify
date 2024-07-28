@@ -46,13 +46,11 @@ server {
 
     location /_next/webpack-hmr {
       proxy_pass http://${DOCKER_0_IP}:3002/_next/webpack-hmr;
-      include proxy.conf;
       
       # WebSocket 支持
-      proxy_set_header Upgrade ${DOLLAR}http_upgrade;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "upgrade";
-      proxy_set_header Host ${DOLLAR}host;
-      proxy_cache_bypass ${DOLLAR}http_upgrade;
     }
 
     location / {
