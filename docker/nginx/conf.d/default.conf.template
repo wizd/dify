@@ -49,7 +49,7 @@ server {
       
       # WebSocket 支持
       proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Upgrade ${DOLLAR_SIGN}http_upgrade;
       proxy_set_header Connection "upgrade";
     }
 

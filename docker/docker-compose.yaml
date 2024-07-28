@@ -346,6 +346,7 @@ services:
       EMBRR_PORT: ${EMBRR_PORT:-5011}
       HTTPX_VERIFY: ${HTTPX_VERIFY:-false}
       DOCKER_0_IP: ${DOCKER_0_IP:-10.10.0.1}
+      DOLLAR_SIGN: ${DOLLAR_SIGN:-$$}
     extra_hosts:
       - 'api.jina.ai:${DOCKER_0_IP}'
     depends_on:
