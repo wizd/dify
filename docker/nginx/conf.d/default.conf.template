@@ -62,7 +62,7 @@ server {
 server {
     listen ${NGINX_PORT};
     listen ${NGINX_SSL_PORT} ssl;
-    server_name api.jina.ai api.cohere.ai;
+    server_name api.jina.ai api.cohere.ai api.cohere.com;
 
     ssl_certificate ./../ssl/${NGINX_SSL_CERT_FILENAME};
     ssl_certificate_key ./../ssl/${NGINX_SSL_CERT_KEY_FILENAME};
