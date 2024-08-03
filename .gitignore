@@ -164,6 +164,9 @@ docker/volumes/etcd/*
 docker/volumes/minio/*
 docker/volumes/milvus/*
 docker/volumes/chroma/*
+docker/volumes/myscale/*
+docker/volumes/opensearch/*
+docker/volumes/sandbox/*
 
 docker/nginx/conf.d/default.conf
 docker/middleware.env
