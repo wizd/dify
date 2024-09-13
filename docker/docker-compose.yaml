@@ -213,7 +213,7 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.8.0
+    image: langgenius/dify-api:0.8.1
     restart: always
     environment:
       # Use the shared environment variables.
@@ -236,7 +236,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:0.8.0
+    image: langgenius/dify-api:0.8.1
     restart: always
     environment:
       # Use the shared environment variables.
@@ -258,7 +258,7 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:0.8.0
+    image: langgenius/dify-web:0.8.1
     restart: always
     extra_hosts:
       - 'api.jina.ai:${DOCKER_0_IP}'
