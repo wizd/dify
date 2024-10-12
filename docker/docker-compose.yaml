@@ -427,12 +427,6 @@ services:
     ports:
       - '${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}'
       - '${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}'
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dify.entrypoints=websecure"
-      - "traefik.http.routers.dify.tls.certResolver=letsencrypt"
-      - "traefik.http.routers.dify.rule=Host(`rakudify.vcorp.ai`)"
-      - "traefik.http.services.dify-svc.loadbalancer.server.port=81"
 
   # The Weaviate vector store.
   weaviate:
