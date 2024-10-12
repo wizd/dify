@@ -93,6 +93,8 @@ const translation = {
     disconnect: '断开连接',
     jumpToNode: '跳转到节点',
     addParallelNode: '添加并行节点',
+    parallel: '并行',
+    branch: '分支',
   },
   env: {
     envPanelTitle: '环境变量',
@@ -170,6 +172,7 @@ const translation = {
   },
   errorMsg: {
     fieldRequired: '{{field}} 不能为空',
+    rerankModelRequired: '开启 Rerank 模型前，请务必确认模型已在设置中成功配置。',
     authRequired: '请先授权',
     invalidJson: '{{field}} 是非法的 JSON',
     fields: {
