@@ -32,6 +32,21 @@ class SecurityConfig(BaseSettings):
         default=5,
     )
 
+    LOGIN_DISABLED: bool = Field(
+        description="Whether to disable login checks",
+        default=False,
+    )
+
+    ADMIN_API_KEY_ENABLE: bool = Field(
+        description="Whether to enable admin api key for authentication",
+        default=False,
+    )
+
+    ADMIN_API_KEY: Optional[str] = Field(
+        description="admin api key for authentication",
+        default=None,
+    )
+
 
 class AppExecutionConfig(BaseSettings):
     """
@@ -94,7 +109,7 @@ class CodeExecutionSandboxConfig(BaseSettings):
     )
 
     CODE_MAX_PRECISION: PositiveInt = Field(
-        description="mMaximum number of decimal places for floating-point numbers in code execution",
+        description="Maximum number of decimal places for floating-point numbers in code execution",
         default=20,
     )
 
@@ -201,6 +216,11 @@ class FileUploadConfig(BaseSettings):
         default=20,
     )
 
+    WORKFLOW_FILE_UPLOAD_LIMIT: PositiveInt = Field(
+        description="Maximum number of files allowed in a workflow upload operation",
+        default=10,
+    )
+
 
 class HttpConfig(BaseSettings):
     """
@@ -256,6 +276,16 @@ class HttpConfig(BaseSettings):
         default=1 * 1024 * 1024,
     )
 
+    SSRF_DEFAULT_MAX_RETRIES: PositiveInt = Field(
+        description="Maximum number of retries for network requests (SSRF)",
+        default=3,
+    )
+
+    SSRF_PROXY_ALL_URL: Optional[str] = Field(
+        description="Proxy URL for HTTP or HTTPS requests to prevent Server-Side Request Forgery (SSRF)",
+        default=None,
+    )
+
     SSRF_PROXY_HTTP_URL: Optional[str] = Field(
         description="Proxy URL for HTTP requests to prevent Server-Side Request Forgery (SSRF)",
         default=None,
@@ -264,6 +294,26 @@ class HttpConfig(BaseSettings):
     SSRF_PROXY_HTTPS_URL: Optional[str] = Field(
         description="Proxy URL for HTTPS requests to prevent Server-Side Request Forgery (SSRF)",
         default=None,
+    )
+
+    SSRF_DEFAULT_TIME_OUT: PositiveFloat = Field(
+        description="The default timeout period used for network requests (SSRF)",
+        default=5,
+    )
+
+    SSRF_DEFAULT_CONNECT_TIME_OUT: PositiveFloat = Field(
+        description="The default connect timeout period used for network requests (SSRF)",
+        default=5,
+    )
+
+    SSRF_DEFAULT_READ_TIME_OUT: PositiveFloat = Field(
+        description="The default read timeout period used for network requests (SSRF)",
+        default=5,
+    )
+
+    SSRF_DEFAULT_WRITE_TIME_OUT: PositiveFloat = Field(
+        description="The default write timeout period used for network requests (SSRF)",
+        default=5,
     )
 
     RESPECT_XFORWARD_HEADERS_ENABLED: bool = Field(
@@ -304,6 +354,16 @@ class LoggingConfig(BaseSettings):
         default=None,
     )
 
+    LOG_FILE_MAX_SIZE: PositiveInt = Field(
+        description="Maximum file size for file rotation retention, the unit is megabytes (MB)",
+        default=20,
+    )
+
+    LOG_FILE_BACKUP_COUNT: PositiveInt = Field(
+        description="Maximum file backup count file rotation retention",
+        default=5,
+    )
+
     LOG_FORMAT: str = Field(
         description="Format string for log messages",
         default="%(asctime)s.%(msecs)03d %(levelname)s [%(threadName)s] [%(filename)s:%(lineno)d] - %(message)s",
@@ -316,7 +376,7 @@ class LoggingConfig(BaseSettings):
 
     LOG_TZ: Optional[str] = Field(
         description="Timezone for log timestamps (e.g., 'America/New_York')",
-        default=None,
+        default="UTC",
     )
 
 
@@ -546,6 +606,16 @@ class DataSetConfig(BaseSettings):
         default=False,
     )
 
+    TIDB_SERVERLESS_NUMBER: PositiveInt = Field(
+        description="number of tidb serverless cluster",
+        default=500,
+    )
+
+    CREATE_TIDB_SERVICE_JOB_ENABLED: bool = Field(
+        description="Enable or disable create tidb service job",
+        default=False,
+    )
+
 
 class WorkspaceConfig(BaseSettings):
     """
@@ -569,9 +639,14 @@ class IndexingConfig(BaseSettings):
     )
 
 
-class ImageFormatConfig(BaseSettings):
+class VisionFormatConfig(BaseSettings):
     MULTIMODAL_SEND_IMAGE_FORMAT: Literal["base64", "url"] = Field(
         description="Format for sending images in multimodal contexts ('base64' or 'url'), default is base64",
+        default="base64",
+    )
+
+    MULTIMODAL_SEND_VIDEO_FORMAT: Literal["base64", "url"] = Field(
+        description="Format for sending videos in multimodal contexts ('base64' or 'url'), default is base64",
         default="base64",
     )
 
@@ -677,7 +752,7 @@ class FeatureConfig(
     FileAccessConfig,
     FileUploadConfig,
     HttpConfig,
-    ImageFormatConfig,
+    VisionFormatConfig,
     InnerAPIConfig,
     IndexingConfig,
     LoggingConfig,
