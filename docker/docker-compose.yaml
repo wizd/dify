@@ -292,7 +292,7 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.13.2
+    image: langgenius/dify-api:0.14.0
     restart: always
     environment:
       # Use the shared environment variables.
@@ -315,7 +315,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:0.13.2
+    image: langgenius/dify-api:0.14.0
     restart: always
     environment:
       # Use the shared environment variables.
@@ -337,7 +337,7 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:0.13.2
+    image: langgenius/dify-web:0.14.0
     restart: always
     extra_hosts:
       - 'api.jina.ai:${DOCKER_0_IP}'
@@ -513,6 +513,16 @@ services:
       - "traefik.http.routers.dify.tls.certResolver=letsencrypt"
       - "traefik.http.routers.dify.rule=Host(`rakudify.vcorp.ai`)"
       - "traefik.http.services.dify-svc.loadbalancer.server.port=81"
+
+  # The TiDB vector store.
+  # For production use, please refer to https://github.com/pingcap/tidb-docker-compose
+  tidb:
+    image: pingcap/tidb:v8.4.0
+    ports:
+      - "4000:4000"
+    command:
+      - --store=unistore
+    restart: always
 
   # The Weaviate vector store.
   weaviate:
