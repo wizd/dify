@@ -125,7 +125,7 @@ const translation = {
   switchStart: 'Start switch',
   openInExplore: 'Open in Explore',
   typeSelector: {
-    all: 'ALL Types',
+    all: 'All Types ',
     chatbot: 'Chatbot',
     agent: 'Agent',
     workflow: 'Workflow',
@@ -169,6 +169,7 @@ const translation = {
       removeConfirmContent: 'The current configuration is in use, removing it will turn off the Tracing feature.',
     },
   },
+  showMyCreatedAppsOnly: 'Created by me',
 }
 
 export default translation

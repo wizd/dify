@@ -112,7 +112,7 @@ const translation = {
   removeOriginal: 'Orijinal uygulamayı sil',
   switchStart: 'Geçişi Başlat',
   typeSelector: {
-    all: 'ALL Types',
+    all: 'All Types',
     chatbot: 'Chatbot',
     agent: 'Agent',
     workflow: 'Workflow',
@@ -179,6 +179,7 @@ const translation = {
     searchAllTemplate: 'Tüm şablonlarda ara...',
     byCategories: 'KATEGORILERE GÖRE',
   },
+  showMyCreatedAppsOnly: 'Sadece oluşturduğum uygulamaları göster',
 }
 
 export default translation
