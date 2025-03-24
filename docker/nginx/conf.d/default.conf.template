@@ -49,33 +49,6 @@ server {
 server {
     listen ${NGINX_PORT};
     listen ${NGINX_SSL_PORT} ssl;
-    server_name ramail.local;
-
-    ssl_certificate ./../ssl/${NGINX_SSL_CERT_FILENAME};
-    ssl_certificate_key ./../ssl/${NGINX_SSL_CERT_KEY_FILENAME};
-    ssl_protocols ${NGINX_SSL_PROTOCOLS};
-    ssl_prefer_server_ciphers on;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
-
-    location /_next/webpack-hmr {
-      proxy_pass http://${DOCKER_0_IP}:3002/_next/webpack-hmr;
-      
-      # WebSocket 支持
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade ${DOLLAR_SIGN}http_upgrade;
-      proxy_set_header Connection "upgrade";
-    }
-
-    location / {
-      proxy_pass http://${DOCKER_0_IP}:3002;
-      include proxy.conf;
-    }
-}
-
-server {
-    listen ${NGINX_PORT};
-    listen ${NGINX_SSL_PORT} ssl;
     server_name api.jina.ai api.cohere.ai api.cohere.com;
 
     ssl_certificate ./../ssl/${NGINX_SSL_CERT_FILENAME};
