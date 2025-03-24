@@ -681,6 +681,12 @@ services:
       - '${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}'
     networks:
       - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dify-web.rule=Host(`chatapp.vcorp.ai`)"
+      - "traefik.http.routers.dify-web.entrypoints=websecure"
+      - "traefik.http.routers.dify-web.tls.certResolver=letsencrypt"
+      - "traefik.http.services.dify-web.loadbalancer.server.port=81"
 
   # The Weaviate vector store.
   weaviate:
