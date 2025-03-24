@@ -455,6 +455,7 @@ services:
     networks:
       - ssrf_proxy_network
       - default
+      - dokploy-network
 
   # worker service
   # The Celery worker for processing the queue.
@@ -480,7 +481,7 @@ services:
     networks:
       - ssrf_proxy_network
       - default
-
+      - dokploy-network
   # Frontend web application.
   web:
     image: langgenius/dify-web:1.1.2
@@ -500,7 +501,8 @@ services:
       LOOP_NODE_MAX_COUNT: ${LOOP_NODE_MAX_COUNT:-100}
       MAX_TOOLS_NUM: ${MAX_TOOLS_NUM:-10}
       MAX_PARALLEL_LIMIT: ${MAX_PARALLEL_LIMIT:-10}
-
+    networks:
+      - dokploy-network 
   # The postgres database.
   db:
     image: postgres:15-alpine
@@ -560,7 +562,7 @@ services:
       test: [ 'CMD', 'curl', '-f', 'http://localhost:8194/health' ]
     networks:
       - ssrf_proxy_network
-
+      - dokploy-network
   # plugin daemon
   plugin_daemon:
     image: langgenius/dify-plugin-daemon:0.0.6-local
@@ -1058,6 +1060,8 @@ networks:
   opensearch-net:
     driver: bridge
     internal: true
+  dokploy-network:
+    external: true
 
 volumes:
   oradata:
