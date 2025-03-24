@@ -673,6 +673,9 @@ services:
     depends_on:
       - api
       - web
+    expose:
+      - '${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}'
+      - '${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}'
     ports:
       - '${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}'
       - '${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}'
