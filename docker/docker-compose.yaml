@@ -755,10 +755,10 @@ services:
       - dokploy-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.dify-web.rule=Host(`chatapp.vcorp.ai`)"
-      - "traefik.http.routers.dify-web.entrypoints=websecure"
-      - "traefik.http.routers.dify-web.tls.certResolver=letsencrypt"
-      - "traefik.http.services.dify-web.loadbalancer.server.port=81"
+      - "traefik.http.routers.dify-chatapp.rule=Host(`chatapp.vcorp.ai`)"
+      - "traefik.http.routers.dify-chatapp.entrypoints=websecure"
+      - "traefik.http.routers.dify-chatapp.tls.certResolver=letsencrypt"
+      - "traefik.http.services.dify-chatapp.loadbalancer.server.port=81"
 
   # The Weaviate vector store.
   weaviate:
